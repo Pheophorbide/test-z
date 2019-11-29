@@ -1,5 +1,6 @@
 import React, {memo} from 'react';
 import {Form, Input, Button} from 'antd';
+import {withRouter} from 'react-router-dom';
 
 //redux
 import {bindActionCreators} from 'redux';
@@ -7,7 +8,7 @@ import {connect} from 'react-redux';
 import {fetchAuthorizationData} from '../../redux/actions/authorizationAction';
 import {checkTokenData, refreshTokenData} from '../../redux/actions/verifyTokenAction';
 
-const LoginForm = ({form, fetchAuthorizationData}) => {
+const LoginForm = ({form, fetchAuthorizationData, history}) => {
     const {getFieldDecorator} = form;
 
     function onSubmit(e) {
@@ -15,7 +16,7 @@ const LoginForm = ({form, fetchAuthorizationData}) => {
 
         form.validateFields((err, values) => {
             if(!err) {
-                fetchAuthorizationData(values)
+                fetchAuthorizationData(values).then(() => history.push('/home'))
             }
         });
     }
@@ -54,4 +55,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 const Login = Form.create()(LoginForm);
 
-export default connect(mapStateToProps, mapDispatchToProps)(memo(Login));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(memo(Login)));

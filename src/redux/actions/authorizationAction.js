@@ -44,9 +44,10 @@ export function fetchAuthorizationData(data) {
             }
 
             dispatch(dataIsLoading());
-            return response.json()
+            return response.json();
         }).then((data) => {
             console.log(data);
+            localStorage.setItem('token', data && data.access);
             dispatch(dataIsSuccess(data))
         }).catch((e) => console.error(e));
     };

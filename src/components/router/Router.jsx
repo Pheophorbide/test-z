@@ -1,8 +1,9 @@
 import React, {PureComponent, useEffect} from 'react';
-import {withRouter, Route} from 'react-router-dom';
+import {withRouter, Route, Switch} from 'react-router-dom';
 import Loading from '../_shared/Loading';
-import {Form, Layout} from "antd";
+import { Layout} from "antd";
 import Login from '../login/Login';
+import Home from '../home/Home';
 
 //redux
 import {bindActionCreators} from 'redux';
@@ -17,19 +18,21 @@ class AppRouter extends PureComponent {
 
     initialRequest = async () => {
         const {access, checkTokenData, refreshTokenData} = this.props;
-
-        await checkTokenData(access);
-        await refreshTokenData(access);
+        const token = localStorage.getItem('token');
+        await checkTokenData(token);
+        await refreshTokenData(token);
     };
 
-
-
     render() {
-        const {access, checkTokenData, refreshTokenData} = this.props;
+        //const {access, checkTokenData, refreshTokenData} = this.props;
 
         return (
             <Layout className={"layout"}>
-                <Login/>
+                <Switch>
+                    <Route exact component={Login} path={'/'}/>
+                    <Route exact component={Home} path={'/home'}/>
+                    <Route component={Login} />
+                </Switch>
             </Layout>
         )
     }

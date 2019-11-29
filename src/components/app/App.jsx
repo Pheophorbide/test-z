@@ -7,7 +7,7 @@ import Router from '../router/Router';
 function App() {
     return (
         <Provider store={store}>
-            <BrowserRouter basename={'z'}>
+            <BrowserRouter basename={'/'}>
                 <Router />
             </BrowserRouter>
         </Provider>
